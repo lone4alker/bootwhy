@@ -45,11 +45,43 @@ func TestParseTimeInProgress(t *testing.T) {
 	}
 }
 
+func TestParseChain(t *testing.T) {
+	input := "graphical.target @1min 2.345s\n" +
+		"└─multi-user.target @1min 2.300s\n" +
+		"  └─slow.service @2.000s +1min 0.300s\n"
+	nodes, err := ParseChain(strings.NewReader(input))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(nodes) != 3 || nodes[0].Depth != 0 || nodes[1].Depth != 1 || nodes[2].Depth != 2 || nodes[2].Took != time.Minute+300*time.Millisecond {
+		t.Fatalf("ParseChain() = %#v", nodes)
+	}
+}
+
+func TestParseBlame(t *testing.T) {
+	entries, err := ParseBlame(strings.NewReader("1min 2.345s slow.service\n345ms quick.service\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(entries) != 2 || entries[0].Unit != "slow.service" || entries[0].Took != time.Minute+2345*time.Millisecond || entries[1].Unit != "quick.service" {
+		t.Fatalf("ParseBlame() = %#v", entries)
+	}
+}
+
 func FuzzSpan(f *testing.F) {
 	for _, value := range []string{"1s", "1min 2.3s", "bad", ""} {
 		f.Add(value)
 	}
 	f.Fuzz(func(t *testing.T, value string) {
 		_, _ = Span(value)
+	})
+}
+
+func FuzzChainLine(f *testing.F) {
+	for _, value := range []string{"foo.service @1s +2s", "└─foo.service", "bad"} {
+		f.Add(value)
+	}
+	f.Fuzz(func(t *testing.T, value string) {
+		_, _ = ParseChain(strings.NewReader(value))
 	})
 }
