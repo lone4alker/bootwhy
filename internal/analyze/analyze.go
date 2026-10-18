@@ -92,7 +92,9 @@ func Analyze(_ parse.Times, chain []parse.ChainNode, blame []parse.BlameEntry, c
 		result.Shape = Normal
 		return result
 	}
-	if kept[0].Share >= DominantShare {
+	if len(kept) >= BottleneckUnits {
+		result.Shape = SharedBottleneck
+	} else if kept[0].Share >= DominantShare {
 		result.Shape = Single
 	} else {
 		result.Shape = Several

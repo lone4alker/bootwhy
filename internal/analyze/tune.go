@@ -18,4 +18,6 @@ const (
 	NormalShare = 0.10
 	// tune: dominant contributor threshold.
 	DominantShare = 0.60
+	// tune: unrelated slow chain units that indicate a shared bottleneck.
+	BottleneckUnits = 5
 )

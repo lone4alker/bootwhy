@@ -24,3 +24,9 @@ func TestAnalyzeVMScaling(t *testing.T) {
 		t.Fatalf("VM added %s; bare added %s", vm.Contributors[0].Added, bare.Contributors[0].Added)
 	}
 }
+
+func TestAnalyzeEmptyChain(t *testing.T) {
+	if got := Analyze(parse.Times{}, nil, nil, acquire.Context{}); got.Shape != MissingData {
+		t.Fatalf("Analyze() = %#v", got)
+	}
+}

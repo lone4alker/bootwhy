@@ -13,6 +13,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/lone4alker/bootwhy/internal/acquire"
+	"github.com/lone4alker/bootwhy/internal/analyze"
 	"github.com/lone4alker/bootwhy/internal/parse"
 )
 
@@ -54,10 +55,15 @@ func main() {
 		fmt.Fprintln(os.Stderr, "BootWhy: could not read the critical chain:", err)
 		os.Exit(2)
 	}
-	printReport(os.Stdout, times, chain)
+	blame, err := parse.ParseBlame(bytes.NewReader(raw.Blame))
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "BootWhy: could not read blame data:", err)
+		os.Exit(2)
+	}
+	printReport(os.Stdout, times, chain, analyze.Analyze(times, chain, blame, raw.Ctx))
 }
 
-func printReport(writer io.Writer, times parse.Times, chain []parse.ChainNode) {
+func printReport(writer io.Writer, times parse.Times, chain []parse.ChainNode, result analyze.Result) {
 	fmt.Fprintln(writer, "Boot phases:")
 	table := tabwriter.NewWriter(writer, 0, 4, 2, ' ', 0)
 	fmt.Fprintf(table, "Firmware:\t%s\n", times.Firmware)
@@ -82,6 +88,12 @@ func printReport(writer io.Writer, times parse.Times, chain []parse.ChainNode) {
 			fmt.Fprintf(writer, " +%s", node.Took)
 		}
 		fmt.Fprintln(writer)
+	}
+	if len(result.Contributors) > 0 {
+		fmt.Fprintln(writer, "\nLikely contributors:")
+		for _, contributor := range result.Contributors {
+			fmt.Fprintf(writer, "  %s: +%s (%.0f%%)\n", contributor.Unit, contributor.Added, contributor.Share*100)
+		}
 	}
 }
 
