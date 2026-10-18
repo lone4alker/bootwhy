@@ -9,21 +9,31 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 	"text/tabwriter"
 
 	"github.com/lone4alker/bootwhy/internal/acquire"
 	"github.com/lone4alker/bootwhy/internal/analyze"
+	"github.com/lone4alker/bootwhy/internal/diagnose"
 	"github.com/lone4alker/bootwhy/internal/parse"
+	"github.com/lone4alker/bootwhy/internal/report"
+	"github.com/lone4alker/bootwhy/internal/rules"
 )
 
 var version = "dev"
 
 func main() {
+	args := os.Args[1:]
+	command := "report"
+	if len(args) > 0 && args[0] == "explain" {
+		command, args = "explain", args[1:]
+	}
 	flags := flag.NewFlagSet("bootwhy", flag.ExitOnError)
 	from := flags.String("from", "", "read a captured boot from DIR")
 	showVersion := flags.Bool("version", false, "print version")
-	flags.Parse(os.Args[1:])
+	jsonOutput := flags.Bool("json", false, "write JSON")
+	flags.Parse(args)
 
 	if *showVersion {
 		fmt.Println(version)
@@ -60,7 +70,35 @@ func main() {
 		fmt.Fprintln(os.Stderr, "BootWhy: could not read blame data:", err)
 		os.Exit(2)
 	}
-	printReport(os.Stdout, times, chain, analyze.Analyze(times, chain, blame, raw.Ctx))
+	journal, _, err := parse.ParseJournal(bytes.NewReader(raw.Journal), times.TargetAfter)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "BootWhy: could not read journal data:", err)
+		os.Exit(2)
+	}
+	result := analyze.Analyze(times, chain, blame, raw.Ctx)
+	findings := diagnose.Diagnose(result.Contributors, chain, journal, raw.Ctx, rules.Default())
+	if *jsonOutput {
+		if err := report.JSON(os.Stdout, times, result, findings); err != nil {
+			os.Exit(2)
+		}
+	} else if command == "explain" {
+		if len(flags.Args()) != 1 {
+			fmt.Fprintln(os.Stderr, "BootWhy: usage: bootwhy explain <row>")
+			os.Exit(2)
+		}
+		row, err := strconv.Atoi(flags.Args()[0])
+		if err != nil || row < 1 || row > len(findings) {
+			fmt.Fprintln(os.Stderr, "BootWhy: no such finding")
+			os.Exit(2)
+		}
+		report.Explain(os.Stdout, findings[row-1])
+	} else {
+		report.Table(os.Stdout, times, result, findings, "systemd-analyze and journalctl")
+		report.Timeline(os.Stdout, times, chain)
+	}
+	if len(findings) > 0 {
+		os.Exit(1)
+	}
 }
 
 func printReport(writer io.Writer, times parse.Times, chain []parse.ChainNode, result analyze.Result) {
