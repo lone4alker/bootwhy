@@ -85,3 +85,28 @@ func FuzzChainLine(f *testing.F) {
 		_, _ = ParseChain(strings.NewReader(value))
 	})
 }
+
+func TestParseJournal(t *testing.T) {
+	input := strings.Join([]string{
+		`{"__MONOTONIC_TIMESTAMP":"1000","UNIT":"first.service","MESSAGE":"first","PRIORITY":"6"}`,
+		`not json`,
+		`{"__MONOTONIC_TIMESTAMP":2000,"_SYSTEMD_UNIT":"second.service","MESSAGE":[255,254],"PRIORITY":3}`,
+		`{"__MONOTONIC_TIMESTAMP":"3000","MESSAGE":"later"}`,
+	}, "\n")
+	entries, malformed, err := ParseJournal(strings.NewReader(input), 2*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if malformed != 1 || len(entries) != 2 || entries[0].Unit != "first.service" || entries[1].Unit != "second.service" || entries[1].Msg != string([]byte{255, 254}) || entries[1].Priority != 3 {
+		t.Fatalf("ParseJournal() = %#v, %d", entries, malformed)
+	}
+}
+
+func FuzzJournalLine(f *testing.F) {
+	for _, value := range []string{"{}", `{"MESSAGE":"hello"}`, "bad"} {
+		f.Add(value)
+	}
+	f.Fuzz(func(t *testing.T, value string) {
+		_, _, _ = ParseJournal(strings.NewReader(value), 0)
+	})
+}
