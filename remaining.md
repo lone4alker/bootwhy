@@ -17,6 +17,13 @@
 - Run clean and fault boots through the accuracy checks. No medium/high-confidence result may contradict the injected cause.
 - Test ordinary and root journal access, reverse dependency collection, a physical SSD machine, and a physical HDD machine.
 
+## Threshold tuning (C18)
+
+The current thresholds in `internal/analyze/tune.go` are deliberately the
+initial plan values. Do not tune them until the clean and fault fixtures above
+exist; record each changed threshold, its prior value, and the fixture that
+demonstrates the correction in the C18 commit.
+
 ## Deferred release work
 
 Phase 7 packaging, licence, README, man page, release hosting, tags, AUR publishing, and fresh-VM package installation are intentionally out of scope for this implementation pass.
