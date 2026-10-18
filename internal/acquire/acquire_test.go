@@ -39,6 +39,12 @@ func TestReverseFixture(t *testing.T) {
 	}
 }
 
+func TestReverseRejectsPath(t *testing.T) {
+	if _, err := Reverse(context.Background(), t.TempDir(), "../bad.service"); err == nil {
+		t.Fatal("Reverse() error = nil; want invalid unit error")
+	}
+}
+
 func writeFixture(t *testing.T, dir, name, content string) {
 	t.Helper()
 	if err := os.WriteFile(filepath.Join(dir, name), []byte(content), 0o644); err != nil {
