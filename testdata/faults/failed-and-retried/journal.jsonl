@@ -1,0 +1,3 @@
+{"__MONOTONIC_TIMESTAMP":"12000000","UNIT":"db-server.service","MESSAGE":"db-server: Service failed to bind to port 5432.","PRIORITY":"3"}
+{"__MONOTONIC_TIMESTAMP":"15000000","UNIT":"db-server.service","MESSAGE":"db-server: Scheduled restart job, restart counter is at 1.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"22000000","UNIT":"db-server.service","MESSAGE":"db-server: Started Database Server.","PRIORITY":"6"}

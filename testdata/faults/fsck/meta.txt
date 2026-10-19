@@ -1,0 +1,6 @@
+vm=false
+rotational=false
+root=true
+journal_partial=false
+boots=10
+os=fedora 44

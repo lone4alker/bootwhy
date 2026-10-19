@@ -1,0 +1,4 @@
+{"__MONOTONIC_TIMESTAMP":"1200000","UNIT":"wsl-bootstrap.service","MESSAGE":"Initializing WSL environment.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"1450000","UNIT":"systemd-journald.service","MESSAGE":"Started Journal Service.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"1850000","UNIT":"systemd-logind.service","MESSAGE":"New seat seat0.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"2050000","UNIT":"multi-user.target","MESSAGE":"Reached target Multi-User System.","PRIORITY":"6"}

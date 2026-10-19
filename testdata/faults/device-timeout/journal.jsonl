@@ -1,0 +1,2 @@
+{"__MONOTONIC_TIMESTAMP":"93200000","UNIT":"dev-disk-by\\x2duuid-deadbeef\\x2d1234\\x2d5678\\x2d9abc\\x2ddef012345678.device","MESSAGE":"Timed out waiting for device /dev/disk/by-uuid/deadbeef-1234-5678-9abc-def012345678.","PRIORITY":"3"}
+{"__MONOTONIC_TIMESTAMP":"93210000","UNIT":"mnt-backup.mount","MESSAGE":"Dependency failed for /mnt/backup.","PRIORITY":"3"}

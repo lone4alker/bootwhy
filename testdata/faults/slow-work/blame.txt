@@ -1,0 +1,5 @@
+18.000s db-precompute.service
+390ms gdm.service
+300ms systemd-journald.service
+200ms sys-devices-virtual.device
+25ms dbus.socket

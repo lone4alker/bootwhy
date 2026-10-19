@@ -1,0 +1,4 @@
+{"__MONOTONIC_TIMESTAMP":"1450000","UNIT":"systemd-journald.service","MESSAGE":"Started Journal Service.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"1750000","UNIT":"dbus.service","MESSAGE":"Started D-Bus User Message Bus.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"2050000","UNIT":"sddm.service","MESSAGE":"Started Simple Desktop Display Manager.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"2280000","UNIT":"graphical.target","MESSAGE":"Reached target Graphical Interface.","PRIORITY":"6"}

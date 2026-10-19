@@ -1,0 +1,8 @@
+350ms NetworkManager.service
+345ms gdm.service
+340ms systemd-journald.service
+195ms systemd-fsck@dev-disk-by\x2duuid-ubuntu.service
+145ms boot-efi.mount
+48ms systemd-user-sessions.service
+45ms plymouth-quit.service
+25ms dbus.socket

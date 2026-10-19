@@ -3,6 +3,7 @@ package acquire
 import (
 	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 )
@@ -42,6 +43,32 @@ func TestReverseFixture(t *testing.T) {
 func TestReverseRejectsPath(t *testing.T) {
 	if _, err := Reverse(context.Background(), t.TempDir(), "../bad.service"); err == nil {
 		t.Fatal("Reverse() error = nil; want invalid unit error")
+	}
+}
+
+func TestLoadLive(t *testing.T) {
+	if _, err := exec.LookPath("systemd-analyze"); err != nil {
+		t.Skip("systemd-analyze not available")
+	}
+	raw, err := Load(context.Background(), "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(raw.Time) == 0 {
+		t.Fatal("empty live time output")
+	}
+}
+
+func TestReverseLive(t *testing.T) {
+	if _, err := exec.LookPath("systemctl"); err != nil {
+		t.Skip("systemctl not available")
+	}
+	got, err := Reverse(context.Background(), "", "basic.target")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got == "" {
+		t.Fatal("empty reverse dependencies for basic.target")
 	}
 }
 

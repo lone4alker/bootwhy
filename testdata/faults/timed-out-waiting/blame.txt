@@ -1,0 +1,5 @@
+16.000s custom-agent.service
+390ms gdm.service
+300ms systemd-journald.service
+200ms sys-devices-virtual.device
+25ms dbus.socket

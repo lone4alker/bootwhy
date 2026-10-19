@@ -1,0 +1,8 @@
+vm=true
+rotational=false
+root=true
+journal_partial=false
+boots=1
+5.15.153.1-microsoft-standard-WSL2
+systemd 255 (255.4-1ubuntu8)
+os=ubuntu 24.04

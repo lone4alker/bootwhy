@@ -1,0 +1,2 @@
+Startup finished in 17.055s (firmware) + 11.000s (loader) + 972ms (kernel) + 7.527s (initrd) + 31.126s (userspace) = 1min 7.681s 
+graphical.target reached after 31.123s in userspace.

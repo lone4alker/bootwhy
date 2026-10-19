@@ -52,7 +52,7 @@ func collectEvidence(unit string, chain []parse.ChainNode, journal []parse.Entry
 		if node.Unit == unit && index > 0 {
 			evidence.PreviousUnit = chain[index-1].Unit
 		}
-		if node.Unit != unit && node.Took > 0 {
+		if node.Unit != unit && node.Took >= analyze.FloorAbs {
 			evidence.Overlapping = append(evidence.Overlapping, node.Unit)
 		}
 	}

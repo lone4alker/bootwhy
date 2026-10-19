@@ -1,0 +1,4 @@
+15.000s app-migration.service
+340ms gdm.service
+300ms systemd-journald.service
+200ms dev-disk-by\x2duuid-root.device

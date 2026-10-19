@@ -1,0 +1,4 @@
+250ms systemd-journald.service
+200ms systemd-logind.service
+200ms wsl-bootstrap.service
+30ms dbus.socket

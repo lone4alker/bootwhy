@@ -1,0 +1,13 @@
+The time when unit became active or started is printed after the "@" character.
+The time the unit took to start is printed after the "+" character.
+
+graphical.target @24.400s
+`-multi-user.target @24.390s
+  `-gdm.service @24.000s +390ms
+    `-basic.target @23.950s
+      `-dbus.socket @23.920s +25ms
+        `-sysinit.target @23.850s
+          `-systemd-journald.service @23.550s +300ms
+            `-local-fs.target @23.200s
+              `-db-precompute.service @5.200s +18.000s
+                `-sys-devices-virtual.device @5.000s +200ms

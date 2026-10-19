@@ -1,0 +1,8 @@
+vm=false
+rotational=false
+root=true
+journal_partial=false
+boots=25
+6.10.10-arch1-1
+systemd 256 (256.6-1-arch)
+os=arch rolling

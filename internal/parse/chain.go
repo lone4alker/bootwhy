@@ -15,7 +15,7 @@ type ChainNode struct {
 }
 
 var ansiPattern = regexp.MustCompile(`\x1b\[[0-9;]*[[:alpha:]]`)
-var chainPattern = regexp.MustCompile(`^([ │├└─]*)([^\s@+]+)(?:\s+@(.+?))?(?:\s+\+(.+))?$`)
+var chainPattern = regexp.MustCompile(`^([ │├└─` + "`" + `\+\|\-\\]*)(\S+?)(?:\s+@(.+?))?(?:\s+\+(.+))?$`)
 
 // ParseChain parses systemd-analyze critical-chain output.
 func ParseChain(reader io.Reader) ([]ChainNode, error) {
@@ -48,7 +48,7 @@ func ParseChain(reader io.Reader) ([]ChainNode, error) {
 }
 
 func chainDepth(prefix string) int {
-	depth := strings.Count(prefix, "├") + strings.Count(prefix, "└")
+	depth := strings.Count(prefix, "├") + strings.Count(prefix, "└") + strings.Count(prefix, "`") + strings.Count(prefix, "+") + strings.Count(prefix, "\\")
 	if depth == 0 {
 		return 0
 	}

@@ -1,0 +1,2 @@
+{"__MONOTONIC_TIMESTAMP":"10000000","UNIT":"systemd-fsck@dev-disk-by\\x2duuid-home.service","MESSAGE":"systemd-fsck[450]: /dev/disk/by-uuid/home: recovering journal","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"50000000","UNIT":"systemd-fsck@dev-disk-by\\x2duuid-home.service","MESSAGE":"systemd-fsck[450]: /dev/disk/by-uuid/home: clean, 312543/1966080 files, 2341255/7864320 blocks","PRIORITY":"6"}

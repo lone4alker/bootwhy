@@ -1,0 +1,19 @@
+The time when unit became active or started is printed after the "@" character.
+The time the unit took to start is printed after the "+" character.
+
+graphical.target @5.200s
+└─multi-user.target @5.195s
+  └─gdm.service @4.850s +345ms
+    └─plymouth-quit.service @4.800s +45ms
+      └─systemd-user-sessions.service @4.750s +48ms
+        └─network.target @4.700s
+          └─NetworkManager.service @4.350s +350ms
+            └─basic.target @4.300s
+              └─sockets.target @4.280s
+                └─dbus.socket @4.250s +25ms
+                  └─sysinit.target @4.200s
+                    └─systemd-journald.service @3.850s +340ms
+                      └─local-fs.target @3.800s
+                        └─boot-efi.mount @3.650s +145ms
+                          └─systemd-fsck@dev-disk-by\x2duuid-ubuntu.service @3.450s +195ms
+                            └─dev-disk-by\x2duuid-ubuntu.device

@@ -1,0 +1,4 @@
+{"__MONOTONIC_TIMESTAMP":"3850000","UNIT":"systemd-journald.service","MESSAGE":"Started Journal Service.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"4350000","UNIT":"NetworkManager.service","MESSAGE":"NetworkManager (version 1.46.0) is starting...","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"4850000","UNIT":"gdm.service","MESSAGE":"Started GNOME Display Manager.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"5200000","UNIT":"graphical.target","MESSAGE":"Reached target Graphical Interface.","PRIORITY":"6"}

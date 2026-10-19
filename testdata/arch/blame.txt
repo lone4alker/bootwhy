@@ -1,0 +1,5 @@
+250ms systemd-journald.service
+230ms dbus.service
+228ms sddm.service
+180ms boot.mount
+38ms systemd-user-sessions.service

@@ -1,0 +1,5 @@
+20.000s systemd-udev-settle.service
+390ms gdm.service
+350ms systemd-udevd.service
+300ms systemd-journald.service
+25ms dbus.socket

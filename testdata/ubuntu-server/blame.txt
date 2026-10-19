@@ -1,0 +1,5 @@
+350ms systemd-networkd.service
+350ms systemd-udevd.service
+330ms systemd-logind.service
+300ms systemd-journald.service
+250ms systemd-fsck-root.service

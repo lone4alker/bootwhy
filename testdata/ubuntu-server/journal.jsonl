@@ -1,0 +1,4 @@
+{"__MONOTONIC_TIMESTAMP":"1750000","UNIT":"systemd-journald.service","MESSAGE":"Started Journal Service.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"2450000","UNIT":"systemd-networkd.service","MESSAGE":"Enumerating interfaces...","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"2850000","UNIT":"systemd-logind.service","MESSAGE":"New seat seat0.","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"3180000","UNIT":"multi-user.target","MESSAGE":"Reached target Multi-User System.","PRIORITY":"6"}

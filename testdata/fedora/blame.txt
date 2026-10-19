@@ -1,0 +1,8 @@
+448ms dbus-broker.service
+345ms plymouth-quit-wait.service
+345ms systemd-tmpfiles-setup.service
+245ms boot.mount
+195ms systemd-fsck@dev-disk-by\x2duuid-053726bd\x2d000c\x2d458d\x2dbfce\x2d794453f70286.service
+145ms auditd.service
+98ms systemd-update-utmp.service
+48ms systemd-user-sessions.service

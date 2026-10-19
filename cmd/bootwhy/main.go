@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 	"text/tabwriter"
+	"time"
 
 	"github.com/lone4alker/bootwhy/internal/acquire"
 	"github.com/lone4alker/bootwhy/internal/analyze"
@@ -70,28 +71,43 @@ func main() {
 		fmt.Fprintln(os.Stderr, "BootWhy: could not read blame data:", err)
 		os.Exit(2)
 	}
-	journal, _, err := parse.ParseJournal(bytes.NewReader(raw.Journal), times.TargetAfter)
+	journalCutoff := times.TargetAfter
+	if journalCutoff > 0 {
+		journalCutoff = times.Kernel + times.Initrd + times.TargetAfter + 2*time.Second
+	} else if times.Userspace > 0 {
+		journalCutoff = times.Kernel + times.Initrd + times.Userspace + 2*time.Second
+	}
+	journal, _, err := parse.ParseJournal(bytes.NewReader(raw.Journal), journalCutoff)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "BootWhy: could not read journal data:", err)
 		os.Exit(2)
 	}
 	result := analyze.Analyze(times, chain, blame, raw.Ctx)
 	findings := diagnose.Diagnose(result.Contributors, chain, journal, raw.Ctx, rules.Default())
+	if command == "report" && len(flags.Args()) > 0 && flags.Args()[0] == "explain" {
+		command = "explain"
+	}
 	if *jsonOutput {
 		if err := report.JSON(os.Stdout, times, result, findings); err != nil {
+			fmt.Fprintln(os.Stderr, "BootWhy: could not write JSON:", err)
 			os.Exit(2)
 		}
 	} else if command == "explain" {
-		if len(flags.Args()) != 1 {
+		explainArgs := flags.Args()
+		if len(explainArgs) > 0 && explainArgs[0] == "explain" {
+			explainArgs = explainArgs[1:]
+		}
+		if len(explainArgs) != 1 {
 			fmt.Fprintln(os.Stderr, "BootWhy: usage: bootwhy explain <row>")
 			os.Exit(2)
 		}
-		row, err := strconv.Atoi(flags.Args()[0])
+		row, err := strconv.Atoi(explainArgs[0])
 		if err != nil || row < 1 || row > len(findings) {
 			fmt.Fprintln(os.Stderr, "BootWhy: no such finding")
 			os.Exit(2)
 		}
 		report.Explain(os.Stdout, findings[row-1])
+		return
 	} else {
 		report.Table(os.Stdout, times, result, findings, "systemd-analyze and journalctl")
 		report.Timeline(os.Stdout, times, chain)

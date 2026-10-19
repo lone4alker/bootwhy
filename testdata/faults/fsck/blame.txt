@@ -1,0 +1,4 @@
+44.500s systemd-fsck@dev-disk-by\x2duuid-home.service
+390ms gdm.service
+300ms systemd-journald.service
+200ms dev-disk-by\x2duuid-home.device

@@ -1,0 +1,2 @@
+{"__MONOTONIC_TIMESTAMP":"9000000","UNIT":"systemd-udev-settle.service","MESSAGE":"Starting udev Wait for Complete Device Initialization...","PRIORITY":"6"}
+{"__MONOTONIC_TIMESTAMP":"29000000","UNIT":"systemd-udev-settle.service","MESSAGE":"Finished udev Wait for Complete Device Initialization.","PRIORITY":"6"}
